@@ -1,0 +1,25 @@
+# Python
+backend/venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Node
+frontend/node_modules/
+node_modules/
+dist/
+
+# Environment and deployments
+.env
+.env.local
+.vercel/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+
