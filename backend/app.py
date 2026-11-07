@@ -43,6 +43,7 @@ async def debug_headers_middleware(request, call_next):
     response = await call_next(request)
     response.headers["X-Request-Path"] = str(request.url.path)
     response.headers["X-Scope-Path"] = str(request.scope.get("path", ""))
+    response.headers["X-Query-String"] = str(request.scope.get("query_string", b""))
     return response
 
 
