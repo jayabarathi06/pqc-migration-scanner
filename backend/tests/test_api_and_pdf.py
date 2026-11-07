@@ -102,3 +102,4 @@ def test_report_endpoint_pdf_generation():
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/pdf"
     assert response.content.startswith(b"%PDF-")
+

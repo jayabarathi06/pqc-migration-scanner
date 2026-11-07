@@ -19,3 +19,4 @@ def compute_sha256(data: bytes) -> str:
 def compute_sha512(data: bytes) -> str:
     # SHA-512 provides high classical and quantum collision resistance.
     return hashlib.sha512(data).hexdigest()
+

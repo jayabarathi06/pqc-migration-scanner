@@ -59,3 +59,4 @@ def scan_directory(base_dir: str, project_name: str = "Scanned Project") -> Dict
         "findings": all_findings,
         "disclaimer": PQC_DISCLAIMER
     }
+

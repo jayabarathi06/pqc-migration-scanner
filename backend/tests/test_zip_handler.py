@@ -60,3 +60,4 @@ def test_valid_safe_extraction(tmp_path):
     assert "src/main.py" in files
     assert not (tmp_path / ".git").exists()
     assert not (tmp_path / "node_modules").exists()
+

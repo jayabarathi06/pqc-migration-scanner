@@ -21,3 +21,4 @@ def legacy_triple_des_encrypt(plaintext: bytes, key: bytes):
     from Crypto.Cipher import DES3
     cipher = DES3.new(key, DES3.MODE_ECB)
     return cipher.encrypt(plaintext)
+

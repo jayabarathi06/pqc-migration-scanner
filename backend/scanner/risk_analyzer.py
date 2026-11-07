@@ -102,3 +102,4 @@ def calculate_quantum_risk_score(findings: List[Dict[str, Any]]) -> Dict[str, An
         "total_findings": len(findings),
         "limitations": SCAN_LIMITATIONS
     }
+

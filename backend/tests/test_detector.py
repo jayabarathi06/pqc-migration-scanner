@@ -111,3 +111,4 @@ def test_pem_and_jwt_detection():
     assert len(findings) > 0
     assert "PEM" in findings[0]["algorithm"]
     assert findings[0]["risk"] == "High"
+

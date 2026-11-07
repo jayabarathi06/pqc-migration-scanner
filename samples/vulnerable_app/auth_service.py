@@ -32,3 +32,4 @@ class AuthService:
         # Signature verification with RSA
         import jwt
         return jwt.decode(token, public_key, algorithms=["RS256", "PS256"])
+

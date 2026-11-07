@@ -50,3 +50,4 @@ export interface ScanResult {
   findings: Finding[];
   disclaimer: string;
 }
+

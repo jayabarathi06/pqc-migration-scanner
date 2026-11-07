@@ -142,3 +142,4 @@ def extract_zip_securely(stream_bytes: bytes, destination_dir: str) -> Tuple[int
             return len(extracted_paths), extracted_paths
     except zipfile.BadZipFile as exc:
         raise ZipValidationError(f"Malformed or corrupted ZIP file: {str(exc)}") from exc
+

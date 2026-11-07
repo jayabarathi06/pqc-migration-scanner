@@ -136,3 +136,4 @@ npm run build
 ## 7. Audit Limitations & Disclaimer
 
 **Potential detection, not proof.** Static code analysis identifies cryptographic APIs, keywords, and structural patterns. It cannot verify dynamic runtime key negotiation, cloud-managed KMS keys (AWS KMS, GCP KMS), or physical Hardware Security Modules (HSMs). Results provide architectural guidance and should be complemented by formal cryptographic review.
+
