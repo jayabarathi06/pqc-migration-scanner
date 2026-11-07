@@ -25,10 +25,36 @@ app = FastAPI(
     version="1.0.0"
 )
 
+from urllib.parse import parse_qs
+
 # Configure CORS origins from environment variable
 raw_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000")
 allowed_origins = [o.strip() for o in raw_origins.split(",") if o.strip()]
 
+class VercelPathRewriteMiddleware:
+    """
+    ASGI middleware to restore the original client path on Vercel.
+    Extracts the __pqc_path query parameter injected by vercel.json rewrite
+    and assigns it to scope['path'] before routing.
+    """
+    def __init__(self, app_instance):
+        self.app = app_instance
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http":
+            query_bytes = scope.get("query_string", b"")
+            if b"__pqc_path=" in query_bytes:
+                query_str = query_bytes.decode("utf-8", errors="ignore")
+                params = parse_qs(query_str)
+                pqc_path_list = params.get("__pqc_path")
+                if pqc_path_list and pqc_path_list[0]:
+                    raw_val = pqc_path_list[0]
+                    clean_path = "/" + "/".join([p for p in raw_val.split("/") if p])
+                    scope["path"] = clean_path
+                    scope["raw_path"] = clean_path.encode("utf-8")
+        await self.app(scope, receive, send)
+
+app.add_middleware(VercelPathRewriteMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins if allowed_origins else ["*"],
