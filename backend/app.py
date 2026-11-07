@@ -28,7 +28,10 @@ app = FastAPI(
 from urllib.parse import parse_qs
 
 # Configure CORS origins from environment variable
-raw_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000")
+raw_origins = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,https://pqc-migration-scanner-ouvr.vercel.app"
+)
 allowed_origins = [o.strip() for o in raw_origins.split(",") if o.strip()]
 
 class VercelPathRewriteMiddleware:
