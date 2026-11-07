@@ -38,7 +38,27 @@ app.add_middleware(
 )
 
 
+@app.middleware("http")
+async def debug_headers_middleware(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Request-Path"] = str(request.url.path)
+    response.headers["X-Scope-Path"] = str(request.scope.get("path", ""))
+    return response
+
+
+@app.get("/")
+@app.get("/api")
+@app.get("/api/index.py")
+def root_index():
+    return {
+        "service": "PQC Migration Scanner Backend",
+        "status": "online",
+        "endpoints": ["/health", "/scan", "/scan-sample", "/report"]
+    }
+
+
 @app.get("/health")
+@app.get("/api/health")
 def health_check():
     """
     Health check endpoint.
@@ -51,6 +71,7 @@ def health_check():
 
 
 @app.post("/scan")
+@app.post("/api/scan")
 async def scan_project_archive(file: UploadFile = File(...)):
     """
     Accepts an uploaded source code ZIP archive (up to 3 MB),
@@ -118,6 +139,7 @@ async def scan_project_archive(file: UploadFile = File(...)):
 
 
 @app.post("/scan-sample")
+@app.post("/api/scan-sample")
 def scan_bundled_sample():
     """
     Executes a real scan against the bundled sample vulnerable application
@@ -147,6 +169,7 @@ def scan_bundled_sample():
 
 
 @app.post("/report")
+@app.post("/api/report")
 def export_pdf_report(scan_data: Dict[str, Any] = Body(...)):
     """
     Generates and returns an executive ReportLab PDF report from scan results.
