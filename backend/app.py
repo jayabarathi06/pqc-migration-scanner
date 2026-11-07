@@ -11,7 +11,7 @@ import tempfile
 from pathlib import Path
 from typing import Dict, Any
 
-from fastapi import FastAPI, UploadFile, File, HTTPException, Response, Body, status
+from fastapi import FastAPI, UploadFile, File, HTTPException, Response, Body, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -60,6 +60,16 @@ def root_index():
 @app.get("/health")
 @app.get("/api/health")
 def health_check():
+    return {
+        "status": "ok",
+        "service": "PQC Migration Scanner",
+        "version": "1.0.0"
+    }
+
+
+@app.get("/debug-headers")
+def debug_headers(request: Request):
+    return dict(request.headers)
     """
     Health check endpoint.
     """
